@@ -1,0 +1,14 @@
+{
+  "buildCommand": "cd attend_sync_web && npm install && npm run build",
+  "outputDirectory": "attend_sync_web/dist",
+  "rewrites": [
+    {
+      "source": "/assets/(.*)",
+      "destination": "/attend_sync_web/dist/assets/$1"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/attend_sync_web/dist/index.html"
+    }
+  ]
+}
