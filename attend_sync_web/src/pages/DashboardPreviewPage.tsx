@@ -57,7 +57,7 @@ export const DashboardPreviewPage: React.FC<DashboardPreviewPageProps> = ({ role
           <div className="flex items-center gap-2">
             <UserCheck className="w-5 h-5 text-indigo-400" />
             <span className="font-extrabold text-sm tracking-tight">
-              AttendSync <span className="text-indigo-400 uppercase font-mono text-xs font-bold">[{role.replace('_', ' ')}]</span>
+              AttendX <span className="text-indigo-400 uppercase font-mono text-xs font-bold">[{role.replace('_', ' ')}]</span>
             </span>
           </div>
         </div>

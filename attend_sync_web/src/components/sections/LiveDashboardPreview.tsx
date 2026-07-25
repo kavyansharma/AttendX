@@ -4,15 +4,15 @@ import { initialStudentData } from '../../data/mockData';
 
 export const LiveDashboardPreview: React.FC = () => {
   return (
-    <div className="relative rounded-2xl border border-slate-800 bg-slate-900/90 shadow-2xl overflow-hidden backdrop-blur-xl transition-all">
+    <div className="relative rounded-2xl border border-slate-800 bg-slate-900/90 shadow-2xl overflow-hidden backdrop-blur-xl transition-all w-full">
       {/* Top OS window bar */}
-      <div className="bg-slate-950 px-4 py-3 border-b border-slate-800 flex items-center justify-between">
+      <div className="bg-slate-950 px-4 py-3 border-b border-slate-800 flex flex-wrap items-center justify-between gap-2">
         <div className="flex items-center gap-2">
           <div className="w-3 h-3 rounded-full bg-rose-500/80" />
           <div className="w-3 h-3 rounded-full bg-amber-500/80" />
           <div className="w-3 h-3 rounded-full bg-emerald-500/80" />
-          <span className="ml-2 text-xs font-semibold text-slate-400">
-            AttendSync Student Portal — Rahul Verma (2024-CSE-042)
+          <span className="ml-2 text-xs font-semibold text-slate-400 truncate max-w-xs sm:max-w-none">
+            AttendX Student Portal — Rahul Verma (2024-CSE-042)
           </span>
         </div>
         <div className="flex items-center gap-2 text-xs text-indigo-400 font-bold bg-indigo-500/10 border border-indigo-500/20 px-2.5 py-1 rounded-full animate-pulse">
@@ -52,7 +52,7 @@ export const LiveDashboardPreview: React.FC = () => {
         </div>
 
         {/* Dashboard Content */}
-        <div className="lg:col-span-9 p-6 space-y-6">
+        <div className="lg:col-span-9 p-4 sm:p-6 space-y-6">
           {/* Header row */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>

@@ -56,7 +56,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onLogin
             <UserCheck className="w-7 h-7" />
           </div>
           <h3 className="text-2xl font-black text-white">Welcome Back</h3>
-          <p className="text-xs text-slate-400 mt-1">Select your role to access your AttendSync portal</p>
+          <p className="text-xs text-slate-400 mt-1">Select your role to access your AttendX portal</p>
         </div>
 
         {/* Role Tabs */}

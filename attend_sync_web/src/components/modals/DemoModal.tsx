@@ -50,7 +50,7 @@ export const DemoModal: React.FC<DemoModalProps> = ({ isOpen, onClose }) => {
             </div>
             <h3 className="text-2xl font-bold text-white">Demo Request Submitted!</h3>
             <p className="text-slate-400 text-sm max-w-md mx-auto">
-              Thank you for your interest in AttendSync. Our higher education specialist will reach out to <span className="text-indigo-400 font-semibold">{formData.email}</span> within 24 hours to schedule a custom demonstration.
+              Thank you for your interest in AttendX. Our higher education specialist will reach out to <span className="text-indigo-400 font-semibold">{formData.email}</span> within 24 hours to schedule a custom demonstration.
             </p>
             <div className="pt-4">
               <button onClick={onClose} className="btn btn-primary px-8">
@@ -64,9 +64,9 @@ export const DemoModal: React.FC<DemoModalProps> = ({ isOpen, onClose }) => {
               <span className="text-xs font-bold text-indigo-400 uppercase tracking-widest bg-indigo-500/10 border border-indigo-500/20 px-3 py-1 rounded-full">
                 Interactive Institutional Demo
               </span>
-              <h3 className="text-2xl font-extrabold text-white mt-2">Request an AttendSync Demo</h3>
+              <h3 className="text-2xl font-extrabold text-white mt-2">Request an AttendX Demo</h3>
               <p className="text-sm text-slate-400">
-                Experience how AttendSync transforms attendance workflows for your college.
+                Experience how AttendX transforms attendance workflows for your college.
               </p>
             </div>
 

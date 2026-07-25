@@ -10,7 +10,7 @@ export const HowItWorks: React.FC = () => {
             3-Step Simplicity
           </span>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-white">
-            How AttendSync Works in 3 Seconds
+            How AttendX Works in 3 Seconds
           </h2>
           <p className="text-slate-400 text-sm sm:text-base">
             No complex setup or hardware scanners required. Works on any faculty laptop, tablet, or smartphone.
