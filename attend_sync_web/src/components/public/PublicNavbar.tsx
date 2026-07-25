@@ -11,7 +11,7 @@ export const PublicNavbar: React.FC<PublicNavbarProps> = ({ onOpenDemo, onOpenLo
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 bg-slate-950/90 backdrop-blur-md border-b border-slate-800/80 transition-all">
+    <header className="sticky top-0 z-[1000] bg-slate-950/95 backdrop-blur-md border-b border-slate-800/80 transition-all w-full">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 sm:h-20">
           {/* Logo */}
@@ -30,7 +30,7 @@ export const PublicNavbar: React.FC<PublicNavbarProps> = ({ onOpenDemo, onOpenLo
           </a>
 
           {/* Desktop Navigation Links */}
-          <nav className="hidden lg:flex items-center gap-7">
+          <nav className="hidden lg:flex items-center gap-6 xl:gap-8">
             <a href="#features" className="text-xs font-semibold text-slate-300 hover:text-indigo-400 transition-colors">
               Features
             </a>
@@ -55,7 +55,7 @@ export const PublicNavbar: React.FC<PublicNavbarProps> = ({ onOpenDemo, onOpenLo
           <div className="hidden sm:flex items-center gap-3">
             <button
               onClick={() => onOpenLogin()}
-              className="text-xs font-semibold text-slate-200 hover:text-white px-4 py-2 rounded-xl border border-slate-800 hover:border-slate-700 bg-slate-900/60 transition-all"
+              className="text-xs font-semibold text-slate-200 hover:text-white px-3.5 py-2 rounded-xl border border-slate-800 hover:border-slate-700 bg-slate-900/60 transition-all"
             >
               Portal Login
             </button>
@@ -80,7 +80,7 @@ export const PublicNavbar: React.FC<PublicNavbarProps> = ({ onOpenDemo, onOpenLo
 
         {/* Mobile Navigation Dropdown Menu */}
         {mobileMenuOpen && (
-          <div className="lg:hidden py-4 border-t border-slate-800 bg-slate-950 rounded-b-2xl px-2 space-y-2 text-xs">
+          <div className="lg:hidden py-4 border-t border-slate-800 bg-slate-950 rounded-b-2xl px-2 space-y-2 text-xs relative z-[1100]">
             <a
               href="#features"
               onClick={() => setMobileMenuOpen(false)}
