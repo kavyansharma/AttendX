@@ -4,11 +4,11 @@
   "rewrites": [
     {
       "source": "/assets/(.*)",
-      "destination": "/attend_sync_web/dist/assets/$1"
+      "destination": "/assets/$1"
     },
     {
       "source": "/(.*)",
-      "destination": "/attend_sync_web/dist/index.html"
+      "destination": "/index.html"
     }
   ]
 }
