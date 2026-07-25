@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Navbar } from './components/layout/Navbar';
-import { Footer } from './components/layout/Footer';
+import { PublicNavbar } from './components/public/PublicNavbar';
+import { PublicFooter } from './components/public/PublicFooter';
 import { HomePage } from './pages/HomePage';
 import { DashboardPreviewPage } from './pages/DashboardPreviewPage';
 import { DemoModal } from './components/modals/DemoModal';
@@ -55,7 +55,8 @@ export const App: React.FC = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleOpenLogin = (role?: string) => {
+  const handleOpenLogin = (role?: UserRole) => {
+    if (role) setActiveRole(null);
     setLoginModalOpen(true);
   };
 
@@ -150,10 +151,10 @@ export const App: React.FC = () => {
     return <DashboardPreviewPage role={activeRole} onLogout={handleLogout} />;
   }
 
-  // Standard Public Website
+  // Standard Public SaaS Website
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans selection:bg-indigo-500 selection:text-white">
-      <Navbar
+    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans selection:bg-indigo-500 selection:text-white overflow-x-hidden">
+      <PublicNavbar
         onOpenDemo={() => setDemoModalOpen(true)}
         onOpenLogin={handleOpenLogin}
       />
@@ -163,7 +164,7 @@ export const App: React.FC = () => {
         onOpenLogin={handleOpenLogin}
       />
 
-      <Footer />
+      <PublicFooter />
 
       <DemoModal
         isOpen={demoModalOpen}

@@ -1,14 +1,13 @@
 import React from 'react';
-import { Hero } from '../components/sections/Hero';
-import { ProblemSection } from '../components/sections/ProblemSection';
-import { SolutionSection } from '../components/sections/SolutionSection';
-import { RealtimeDemo } from '../components/sections/RealtimeDemo';
-import { FeaturesGrid } from '../components/sections/FeaturesGrid';
-import { HowItWorks } from '../components/sections/HowItWorks';
-import { RoleSection } from '../components/sections/RoleSection';
-import { SecuritySection } from '../components/sections/SecuritySection';
-import { AnalyticsPreview } from '../components/sections/AnalyticsPreview';
-import { CtaSection } from '../components/sections/CtaSection';
+import { Hero } from '../components/public/Hero';
+import { ProblemSection } from '../components/public/ProblemSection';
+import { SolutionSection } from '../components/public/SolutionSection';
+import { HowItWorks } from '../components/public/HowItWorks';
+import { Features } from '../components/public/Features';
+import { RoleExperience } from '../components/public/RoleExperience';
+import { SecuritySection } from '../components/public/SecuritySection';
+import { AnalyticsSection } from '../components/public/AnalyticsSection';
+import { CTASection } from '../components/public/CTASection';
 import { UserRole } from '../types';
 
 interface HomePageProps {
@@ -18,17 +17,16 @@ interface HomePageProps {
 
 export const HomePage: React.FC<HomePageProps> = ({ onOpenDemo, onOpenLogin }) => {
   return (
-    <main>
+    <main className="w-full min-w-0">
       <Hero onOpenDemo={onOpenDemo} onOpenLogin={() => onOpenLogin('student')} />
       <ProblemSection />
       <SolutionSection />
-      <RealtimeDemo />
-      <FeaturesGrid />
       <HowItWorks />
-      <RoleSection onOpenLogin={onOpenLogin} />
+      <Features />
+      <RoleExperience onOpenLogin={onOpenLogin} />
       <SecuritySection />
-      <AnalyticsPreview />
-      <CtaSection onOpenDemo={onOpenDemo} onOpenLogin={() => onOpenLogin('admin')} />
+      <AnalyticsSection />
+      <CTASection onOpenDemo={onOpenDemo} onOpenLogin={() => onOpenLogin('admin')} />
     </main>
   );
 };
