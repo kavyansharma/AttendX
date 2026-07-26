@@ -26,6 +26,15 @@ import { AuditLogsPage } from './pages/admin/AuditLogsPage';
 import { SettingsPage } from './pages/admin/SettingsPage';
 import { AdminLoginPage } from './pages/admin/AdminLoginPage';
 
+// Teacher Portal Components
+import { TeacherLayout } from './components/teacher/TeacherLayout';
+import { TeacherLoginPage } from './pages/teacher/TeacherLoginPage';
+import { TeacherDashboardPage } from './pages/teacher/TeacherDashboardPage';
+import { TeacherClassesPage } from './pages/teacher/TeacherClassesPage';
+import { TeacherProfilePage } from './pages/teacher/TeacherProfilePage';
+import { TeacherService } from './services/teacherService';
+import { TeacherProfileData } from './types/teacher';
+
 export const App: React.FC = () => {
   const [demoModalOpen, setDemoModalOpen] = useState(false);
   const [loginModalOpen, setLoginModalOpen] = useState(false);
@@ -37,12 +46,26 @@ export const App: React.FC = () => {
   );
   const [isAdminLoggedIn, setIsAdminLoggedIn] = useState<boolean>(true);
 
+  // Teacher routing & auth state
+  const [currentTeacherPath, setCurrentTeacherPath] = useState<string>(
+    window.location.pathname.startsWith('/teacher') ? window.location.pathname : ''
+  );
+  const [teacherSession, setTeacherSession] = useState<TeacherProfileData | null>(
+    TeacherService.getActiveSession()
+  );
+
   useEffect(() => {
     const handlePopState = () => {
-      if (window.location.pathname.startsWith('/admin')) {
-        setCurrentAdminPath(window.location.pathname);
+      const path = window.location.pathname;
+      if (path.startsWith('/admin')) {
+        setCurrentAdminPath(path);
+        setCurrentTeacherPath('');
+      } else if (path.startsWith('/teacher')) {
+        setCurrentTeacherPath(path);
+        setCurrentAdminPath('');
       } else {
         setCurrentAdminPath('');
+        setCurrentTeacherPath('');
       }
     };
     window.addEventListener('popstate', handlePopState);
@@ -52,10 +75,22 @@ export const App: React.FC = () => {
   const navigateAdmin = (path: string) => {
     window.history.pushState({}, '', path);
     setCurrentAdminPath(path);
+    setCurrentTeacherPath('');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const navigateTeacher = (path: string) => {
+    window.history.pushState({}, '', path);
+    setCurrentTeacherPath(path);
+    setCurrentAdminPath('');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleOpenLogin = (role?: UserRole) => {
+    if (role === 'teacher') {
+      navigateTeacher('/teacher/login');
+      return;
+    }
     if (role) setActiveRole(null);
     setLoginModalOpen(true);
   };
@@ -65,19 +100,85 @@ export const App: React.FC = () => {
     if (role === 'admin' || role === 'super_admin') {
       setIsAdminLoggedIn(true);
       navigateAdmin('/admin');
+    } else if (role === 'teacher') {
+      const session = TeacherService.getActiveSession();
+      setTeacherSession(session);
+      navigateTeacher('/teacher/dashboard');
     } else {
       setActiveRole(role);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 
+  const handleTeacherLoginSuccess = (teacherProfile: TeacherProfileData) => {
+    setTeacherSession(teacherProfile);
+    navigateTeacher('/teacher/dashboard');
+  };
+
+  const handleTeacherLogout = async () => {
+    await TeacherService.logout();
+    setTeacherSession(null);
+    navigateTeacher('/teacher/login');
+  };
+
   const handleLogout = () => {
     setActiveRole(null);
     setCurrentAdminPath('');
+    setCurrentTeacherPath('');
+    setTeacherSession(null);
     window.history.pushState({}, '', '/');
   };
 
-  // If in Admin route space
+  // IF IN TEACHER PORTAL ROUTE SPACE
+  if (currentTeacherPath.startsWith('/teacher')) {
+    // If not authenticated and trying to access protected teacher routes, redirect to login
+    if (!teacherSession && currentTeacherPath !== '/teacher/login') {
+      return (
+        <TeacherLoginPage
+          onLoginSuccess={handleTeacherLoginSuccess}
+          onNavigateHome={() => handleLogout()}
+        />
+      );
+    }
+
+    if (currentTeacherPath === '/teacher/login') {
+      return (
+        <TeacherLoginPage
+          onLoginSuccess={handleTeacherLoginSuccess}
+          onNavigateHome={() => handleLogout()}
+        />
+      );
+    }
+
+    let teacherContent = <TeacherDashboardPage teacher={teacherSession} />;
+    switch (currentTeacherPath) {
+      case '/teacher':
+      case '/teacher/dashboard':
+        teacherContent = <TeacherDashboardPage teacher={teacherSession} />;
+        break;
+      case '/teacher/classes':
+        teacherContent = <TeacherClassesPage teacher={teacherSession} />;
+        break;
+      case '/teacher/profile':
+        teacherContent = <TeacherProfilePage teacher={teacherSession} />;
+        break;
+      default:
+        teacherContent = <TeacherDashboardPage teacher={teacherSession} />;
+    }
+
+    return (
+      <TeacherLayout
+        activePath={currentTeacherPath}
+        onNavigate={navigateTeacher}
+        onLogout={handleTeacherLogout}
+        teacher={teacherSession}
+      >
+        {teacherContent}
+      </TeacherLayout>
+    );
+  }
+
+  // IF IN ADMIN ROUTE SPACE
   if (currentAdminPath.startsWith('/admin')) {
     if (!isAdminLoggedIn && currentAdminPath !== '/admin/login') {
       return <AdminLoginPage onLoginSuccess={() => setIsAdminLoggedIn(true)} />;
