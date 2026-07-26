@@ -1,125 +1,211 @@
-import React from 'react';
-import { UserCheck, AlertTriangle, CheckCircle, Clock, BookOpen, ChevronRight, Bell } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { UserCheck, CheckCircle2, XCircle, Bell, Zap, Shield, Smartphone } from 'lucide-react';
 
 export const LiveProductPreview: React.FC = () => {
-  const subjects = [
-    { code: 'CS401', name: 'Data Structures & Algorithms', percentage: 78, attended: 39, total: 50, status: 'safe' },
-    { code: 'CS402', name: 'Database Management Systems', percentage: 84, attended: 42, total: 50, status: 'safe' },
-    { code: 'CS403', name: 'Operating Systems', percentage: 91, attended: 45, total: 50, status: 'safe' },
-    { code: 'HU401', name: 'Technical Communication', percentage: 69, attended: 27, total: 39, status: 'low' },
-  ];
+  // Live simulation state
+  const [arjunStatus, setArjunStatus] = useState<'Present' | 'Absent'>('Present');
+  const [lastUpdatedTime, setLastUpdatedTime] = useState<string>('Just now');
+
+  // Toggle Arjun's attendance every 4 seconds to demonstrate real-time sync
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setArjunStatus((prev) => (prev === 'Present' ? 'Absent' : 'Present'));
+      setLastUpdatedTime('Just now');
+    }, 4000);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
-    <div id="live-preview" className="relative rounded-2xl border border-slate-800 bg-slate-900/90 shadow-2xl overflow-hidden backdrop-blur-xl transition-all w-full max-w-[600px] mx-auto">
-      {/* Top OS window bar */}
-      <div className="bg-slate-950 px-4 py-3 border-b border-slate-800 flex flex-wrap items-center justify-between gap-2">
-        <div className="flex items-center gap-2">
-          <div className="w-3 h-3 rounded-full bg-rose-500/80" />
-          <div className="w-3 h-3 rounded-full bg-amber-500/80" />
-          <div className="w-3 h-3 rounded-full bg-emerald-500/80" />
-          <span className="ml-2 text-xs font-semibold text-slate-400 truncate max-w-[200px] sm:max-w-none">
-            AttendX Student Portal — Rahul Verma (2024-CSE-042)
-          </span>
-        </div>
-        <div className="flex items-center gap-2 text-xs text-indigo-400 font-bold bg-indigo-500/10 border border-indigo-500/20 px-2.5 py-1 rounded-full animate-pulse">
-          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
-          <span>Realtime Synchronized</span>
-        </div>
-      </div>
+    <section id="live-demo" className="py-16 lg:py-24 bg-[#0B1F3A] text-white overflow-hidden relative">
+      {/* Decorative ambient background glows */}
+      <div className="absolute top-1/4 left-10 w-96 h-96 bg-[#00B8D9]/15 rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute bottom-10 right-10 w-96 h-96 bg-[#2563EB]/20 rounded-full blur-[140px] pointer-events-none" />
 
-      {/* Main Container */}
-      <div className="p-4 sm:p-6 space-y-5 text-left">
-        {/* Header row */}
-        <div className="flex items-center justify-between gap-4">
-          <div>
-            <span className="text-[11px] uppercase font-bold tracking-wider text-slate-400">Good Morning</span>
-            <h3 className="text-lg font-black text-white">Rahul Verma</h3>
+      <div className="container-custom relative z-10 space-y-12">
+        {/* Section Header */}
+        <div className="text-center max-w-[700px] mx-auto space-y-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#00B8D9]/20 text-[#00B8D9] text-xs font-bold uppercase tracking-wider">
+            <Zap className="w-3.5 h-3.5 animate-pulse" />
+            <span>REAL-TIME SYNCHRONIZATION</span>
           </div>
-          <div className="flex items-center gap-3">
-            <div className="text-right">
-              <div className="text-xl font-black text-emerald-400">82%</div>
-              <div className="text-[10px] text-slate-400 font-semibold">Overall Standing</div>
-            </div>
-            <span className="badge badge-success px-2.5 py-1 text-[11px]">SAFE</span>
-          </div>
+          <h2 className="text-3xl sm:text-4xl lg:text-[44px] font-extrabold text-white tracking-tight leading-tight">
+            Attendance Updates. The Moment They Happen.
+          </h2>
+          <p className="text-base sm:text-lg text-slate-300 leading-relaxed">
+            Watch how a single tap on the teacher dashboard updates the student status instantly.
+          </p>
         </div>
 
-        {/* Stats Bar */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
-          <div className="p-3 rounded-xl bg-slate-950/80 border border-slate-800">
-            <div className="text-[11px] text-slate-400">Classes Attended</div>
-            <div className="text-sm font-bold text-white mt-0.5">82 Conducted</div>
-          </div>
-          <div className="p-3 rounded-xl bg-slate-950/80 border border-slate-800">
-            <div className="text-[11px] text-slate-400">Classes Missed</div>
-            <div className="text-sm font-bold text-rose-400 mt-0.5">18 Sessions</div>
-          </div>
-          <div className="p-3 rounded-xl bg-slate-950/80 border border-slate-800 col-span-2 sm:col-span-1">
-            <div className="text-[11px] text-slate-400">Low Attendance Risk</div>
-            <div className="text-sm font-bold text-amber-400 mt-0.5">1 Subject (Tech Comm)</div>
-          </div>
-        </div>
-
-        {/* Subject List Grid */}
-        <div>
-          <div className="flex items-center justify-between mb-2.5">
-            <h4 className="text-[11px] font-bold text-slate-300 uppercase tracking-wider">Subject-Wise Breakdown</h4>
-            <span className="text-[11px] text-indigo-400 hover:underline flex items-center">
-              View History <ChevronRight className="w-3 h-3" />
-            </span>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-            {subjects.map((sub) => (
-              <div
-                key={sub.code}
-                className={`p-3 rounded-xl border transition-all ${
-                  sub.status === 'low'
-                    ? 'bg-rose-950/20 border-rose-500/40'
-                    : 'bg-slate-950/60 border-slate-800'
-                }`}
-              >
-                <div className="flex items-center justify-between mb-1">
-                  <span className="text-[11px] font-bold text-slate-400">{sub.code}</span>
-                  <span
-                    className={`text-[11px] font-extrabold ${
-                      sub.status === 'low' ? 'text-rose-400' : 'text-emerald-400'
-                    }`}
-                  >
-                    {sub.percentage}%
-                  </span>
-                </div>
-                <div className="text-xs font-semibold text-white truncate">{sub.name}</div>
-                <div className="mt-1.5 text-[10px] text-slate-400 flex items-center justify-between">
-                  <span>
-                    {sub.attended}/{sub.total} Classes
-                  </span>
-                  {sub.status === 'low' ? (
-                    <span className="text-rose-400 font-bold flex items-center gap-0.5">
-                      <AlertTriangle className="w-3 h-3" /> LOW (Req 75%)
+        {/* 2-Column Grid: Left Teacher Panel | Right Student Notification Sync */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+          {/* LEFT: Teacher Dashboard Panel (7 cols on desktop) */}
+          <div className="lg:col-span-7 bg-[#123B66]/80 rounded-2xl border border-slate-700/80 p-6 sm:p-8 backdrop-blur-md shadow-2xl flex flex-col justify-between space-y-6">
+            <div className="space-y-6">
+              {/* Header */}
+              <div className="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-slate-700/80">
+                <div className="space-y-1">
+                  <div className="flex items-center gap-2">
+                    <UserCheck className="w-5 h-5 text-[#00B8D9]" />
+                    <span className="text-xs font-extrabold uppercase tracking-wider text-slate-300">
+                      Teacher Live Session
                     </span>
-                  ) : (
-                    <span className="text-emerald-400 font-medium">Safe</span>
-                  )}
+                  </div>
+                  <div className="text-xl font-bold text-white">Class: B.Tech CSE — Section A</div>
+                  <div className="text-sm font-semibold text-[#00B8D9]">Subject: Physics</div>
+                </div>
+
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 text-xs font-bold">
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
+                  <span>SESSION ACTIVE</span>
                 </div>
               </div>
-            ))}
-          </div>
-        </div>
 
-        {/* Live Recent Event Ticker */}
-        <div className="p-3 rounded-xl bg-indigo-950/30 border border-indigo-500/30 flex items-center justify-between text-xs">
-          <div className="flex items-center gap-2 text-indigo-200 truncate">
-            <CheckCircle className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" />
-            <span className="truncate text-[11px]">
-              <strong className="text-white">DBMS</strong> attendance marked by Dr. Kumar (Present)
-            </span>
+              {/* Roster List */}
+              <div className="space-y-3">
+                <div className="text-xs font-bold text-slate-300 uppercase tracking-wider">
+                  Student Roster
+                </div>
+
+                <div className="space-y-2.5">
+                  {/* Rahul */}
+                  <div className="bg-[#0B1F3A] p-3.5 rounded-xl border border-slate-700/60 flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 rounded-full bg-slate-700 text-slate-200 flex items-center justify-center text-xs font-bold">
+                        R
+                      </div>
+                      <span className="text-sm font-semibold text-white">Rahul Sharma</span>
+                    </div>
+                    <span className="px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-bold flex items-center gap-1.5 border border-emerald-500/30">
+                      <CheckCircle2 className="w-3.5 h-3.5" />
+                      Present
+                    </span>
+                  </div>
+
+                  {/* Priya */}
+                  <div className="bg-[#0B1F3A] p-3.5 rounded-xl border border-slate-700/60 flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 rounded-full bg-slate-700 text-slate-200 flex items-center justify-center text-xs font-bold">
+                        P
+                      </div>
+                      <span className="text-sm font-semibold text-white">Priya Patel</span>
+                    </div>
+                    <span className="px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-bold flex items-center gap-1.5 border border-emerald-500/30">
+                      <CheckCircle2 className="w-3.5 h-3.5" />
+                      Present
+                    </span>
+                  </div>
+
+                  {/* Arjun (Toggles automatically) */}
+                  <div className="bg-[#0B1F3A] p-3.5 rounded-xl border border-[#00B8D9]/60 flex items-center justify-between transition-all shadow-lg shadow-[#00B8D9]/10">
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 rounded-full bg-[#00B8D9] text-[#0B1F3A] flex items-center justify-center text-xs font-bold">
+                        A
+                      </div>
+                      <div>
+                        <span className="text-sm font-semibold text-white">Arjun Kumar</span>
+                        <span className="block text-[10px] text-[#00B8D9] font-mono">Simulating live toggle...</span>
+                      </div>
+                    </div>
+                    {arjunStatus === 'Present' ? (
+                      <span className="px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-bold flex items-center gap-1.5 border border-emerald-500/30">
+                        <CheckCircle2 className="w-3.5 h-3.5" />
+                        Present
+                      </span>
+                    ) : (
+                      <span className="px-3 py-1 rounded-full bg-rose-500/20 text-rose-400 text-xs font-bold flex items-center gap-1.5 border border-rose-500/30">
+                        <XCircle className="w-3.5 h-3.5" />
+                        Absent
+                      </span>
+                    )}
+                  </div>
+
+                  {/* Neha */}
+                  <div className="bg-[#0B1F3A] p-3.5 rounded-xl border border-slate-700/60 flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 rounded-full bg-slate-700 text-slate-200 flex items-center justify-center text-xs font-bold">
+                        N
+                      </div>
+                      <span className="text-sm font-semibold text-white">Neha Verma</span>
+                    </div>
+                    <span className="px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-bold flex items-center gap-1.5 border border-emerald-500/30">
+                      <CheckCircle2 className="w-3.5 h-3.5" />
+                      Present
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="pt-2 text-xs text-slate-300 flex items-center gap-2">
+              <Shield className="w-4 h-4 text-[#00B8D9]" />
+              <span>Session changes are immediately signed and pushed to Supabase PostgreSQL</span>
+            </div>
           </div>
-          <span className="text-[10px] text-indigo-300 font-semibold bg-indigo-500/20 px-2 py-0.5 rounded flex-shrink-0">
-            Just now
-          </span>
+
+          {/* RIGHT: Live Animated Student Sync Device Mockup (5 cols on desktop) */}
+          <div className="lg:col-span-5 bg-[#071527] rounded-2xl border border-slate-700/80 p-6 sm:p-8 backdrop-blur-md shadow-2xl flex flex-col justify-between space-y-6">
+            <div className="space-y-6">
+              {/* Header */}
+              <div className="flex items-center justify-between pb-4 border-b border-slate-700/80">
+                <div className="flex items-center gap-2">
+                  <Smartphone className="w-5 h-5 text-[#00B8D9]" />
+                  <span className="text-xs font-extrabold uppercase tracking-wider text-slate-300">
+                    Student App Sync
+                  </span>
+                </div>
+                <span className="text-xs text-slate-400 font-mono">Arjun's Phone</span>
+              </div>
+
+              {/* Notification Card */}
+              <div className="space-y-4">
+                <div className="bg-[#0B1F3A] p-5 rounded-xl border border-[#00B8D9]/40 shadow-xl space-y-3">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <div className="w-7 h-7 rounded-lg bg-[#00B8D9]/20 text-[#00B8D9] flex items-center justify-center">
+                        <Bell className="w-4 h-4" />
+                      </div>
+                      <span className="text-xs font-bold text-white">Attendance Updated</span>
+                    </div>
+                    <span className="text-[11px] text-[#00B8D9] font-medium">{lastUpdatedTime}</span>
+                  </div>
+
+                  <div className="space-y-1">
+                    <div className="text-base font-bold text-white">Physics</div>
+                    <div className="text-xs text-slate-300">Prof. Dr. Mehta • B.Tech CSE Sec A</div>
+                  </div>
+
+                  <div className="pt-2 border-t border-slate-700/60 flex items-center justify-between">
+                    <span className="text-xs text-slate-400">Status:</span>
+                    {arjunStatus === 'Present' ? (
+                      <span className="px-3 py-1 rounded-full bg-emerald-500 text-slate-950 text-xs font-extrabold flex items-center gap-1.5 shadow-md">
+                        <CheckCircle2 className="w-3.5 h-3.5" />
+                        Present
+                      </span>
+                    ) : (
+                      <span className="px-3 py-1 rounded-full bg-rose-500 text-white text-xs font-extrabold flex items-center gap-1.5 shadow-md">
+                        <XCircle className="w-3.5 h-3.5" />
+                        Absent
+                      </span>
+                    )}
+                  </div>
+                </div>
+
+                {/* Explanation */}
+                <div className="bg-[#123B66]/40 p-4 rounded-xl border border-slate-700/40 text-xs text-slate-300 leading-relaxed">
+                  <p>
+                    <strong className="text-white font-semibold">Zero Latency:</strong> As soon as the teacher marks attendance, the record updates instantly across the mobile app & college administration dashboard.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="pt-2 text-xs text-emerald-400 font-semibold flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
+              <span>Real-Time WebSocket Sync Active</span>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };

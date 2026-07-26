@@ -1,49 +1,103 @@
 import React from 'react';
-import { Building, UserCheck, Zap, Database, Smartphone, PieChart, ArrowRight } from 'lucide-react';
+import { UserCheck, GraduationCap, Building2, CheckCircle2 } from 'lucide-react';
 
 export const SolutionSection: React.FC = () => {
-  const flow = [
-    { num: '01', icon: Building, label: 'College Admin', desc: 'Sets hierarchy & timetables' },
-    { num: '02', icon: UserCheck, label: 'Teacher Marks Class', desc: '1-click session submission' },
-    { num: '03', icon: Database, label: 'Secure PostgreSQL', desc: 'Row Level Security save' },
-    { num: '04', icon: Zap, label: 'Realtime Broadcast', desc: 'Instant WebSocket push' },
-    { num: '05', icon: Smartphone, label: 'Student Mobile App', desc: 'Live percent & alert refresh' },
-    { num: '06', icon: PieChart, label: 'College Analytics', desc: 'Real-time compliance reports' },
+  const experiences = [
+    {
+      role: 'FOR STUDENTS',
+      title: 'Students',
+      description: 'Complete transparency over subject percentages, live status alerts, and seamless correction requests.',
+      icon: UserCheck,
+      badgeColor: 'bg-blue-50 text-[#2563EB] border-blue-200',
+      accentColor: 'border-l-4 border-l-[#2563EB]',
+      points: [
+        'See attendance instantly after class',
+        'Track subject-wise attendance stats',
+        'Know when attendance is at risk (<75%)',
+        'Submit correction requests directly',
+      ],
+    },
+    {
+      role: 'FOR TEACHERS',
+      title: 'Teachers',
+      description: 'Fast, hassle-free attendance marking in seconds without paperwork or manual calculations.',
+      icon: GraduationCap,
+      badgeColor: 'bg-cyan-50 text-[#00B8D9] border-cyan-200',
+      accentColor: 'border-l-4 border-l-[#00B8D9]',
+      points: [
+        'Start live attendance sessions in 1 click',
+        'Mark students quickly with intuitive UI',
+        'Update attendance in real time',
+        'Review attendance before final submission',
+      ],
+    },
+    {
+      role: 'FOR COLLEGE ADMINISTRATION',
+      title: 'College Administration',
+      description: 'Centralized institution control with complete visibility, department reports, and audit trails.',
+      icon: Building2,
+      badgeColor: 'bg-indigo-50 text-[#0B1F3A] border-indigo-200',
+      accentColor: 'border-l-4 border-l-[#0B1F3A]',
+      points: [
+        'Manage students and faculty members',
+        'Configure departments, courses & sections',
+        'Create & schedule class timetables',
+        'View college-wide analytics and audit trails',
+      ],
+    },
   ];
 
   return (
-    <section className="py-16 sm:py-20 bg-slate-950 relative overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="text-center max-w-3xl mx-auto mb-14 space-y-3">
-          <span className="text-xs font-extrabold text-indigo-400 uppercase tracking-widest bg-indigo-500/10 border border-indigo-500/20 px-3.5 py-1 rounded-full">
-            The AttendX Solution
-          </span>
-          <h2 className="text-2xl sm:text-4xl font-extrabold text-white">
-            One Connected Attendance Ecosystem.
+    <section id="solution" className="py-16 lg:py-24 bg-white border-y border-slate-200">
+      <div className="container-custom space-y-12">
+        {/* Section Header */}
+        <div className="text-center max-w-[700px] mx-auto space-y-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#E6FAFF] text-[#007A93] text-xs font-bold uppercase tracking-wider">
+            <span>THE SOLUTION</span>
+          </div>
+          <h2 className="text-3xl sm:text-4xl lg:text-[44px] font-extrabold text-[#0F172A] tracking-tight leading-tight">
+            One Platform. Three Powerful Experiences.
           </h2>
-          <p className="text-slate-400 text-sm sm:text-base leading-relaxed">
-            Eliminate communication gaps between classrooms and students with zero-latency synchronization.
+          <p className="text-base sm:text-lg text-[#64748B] leading-relaxed">
+            AttendX connects everyone on campus into a unified real-time workflow.
           </p>
         </div>
 
-        {/* 6-Step Workflow Flow */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
-          {flow.map((item, idx) => {
-            const Icon = item.icon;
+        {/* 3 Experience Cards Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {experiences.map((exp, idx) => {
+            const Icon = exp.icon;
             return (
               <div
                 key={idx}
-                className="p-5 rounded-2xl bg-slate-900 border border-slate-800 hover:border-indigo-500/40 transition-all flex flex-col justify-between group"
+                className={`bg-[#F8FAFC] p-8 rounded-2xl border border-slate-200 shadow-sm ${exp.accentColor} space-y-6 hover:shadow-md transition-all flex flex-col justify-between`}
               >
-                <div>
-                  <div className="flex items-center justify-between mb-3">
-                    <span className="text-xs font-mono font-bold text-indigo-400">{item.num}</span>
-                    <div className="w-8 h-8 rounded-lg bg-indigo-600/20 border border-indigo-500/30 text-indigo-400 flex items-center justify-center group-hover:scale-110 transition-transform">
-                      <Icon className="w-4 h-4" />
+                <div className="space-y-6">
+                  {/* Badge & Icon Header */}
+                  <div className="flex items-center justify-between">
+                    <span className={`px-3 py-1 rounded-full text-xs font-bold uppercase border ${exp.badgeColor}`}>
+                      {exp.role}
+                    </span>
+                    <div className="w-10 h-10 rounded-xl bg-white border border-slate-200 flex items-center justify-center shadow-sm">
+                      <Icon className="w-5 h-5 text-[#0F172A]" />
                     </div>
                   </div>
-                  <h3 className="text-xs font-bold text-white mb-1">{item.label}</h3>
-                  <p className="text-[11px] text-slate-400 leading-snug">{item.desc}</p>
+
+                  {/* Title & Description */}
+                  <div className="space-y-2">
+                    <h3 className="text-2xl font-bold text-[#0F172A]">{exp.title}</h3>
+                    <p className="text-sm text-[#64748B] leading-relaxed">{exp.description}</p>
+                  </div>
+
+                  {/* Feature Bullet Points */}
+                  <div className="pt-2 space-y-3 border-t border-slate-200/80">
+                    {exp.points.map((pt, pIdx) => (
+                      <div key={pIdx} className="flex items-start gap-2.5 text-sm font-medium text-[#0F172A]">
+                        <CheckCircle2 className="w-4 h-4 text-[#10B981] shrink-0 mt-0.5" />
+                        <span>{pt}</span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
             );

@@ -153,7 +153,7 @@ export const App: React.FC = () => {
 
   // Standard Public SaaS Website
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans selection:bg-indigo-500 selection:text-white overflow-x-hidden">
+    <div className="min-h-screen bg-[#F8FAFC] text-[#0F172A] flex flex-col font-sans selection:bg-[#2563EB] selection:text-white overflow-x-hidden">
       <PublicNavbar
         onOpenDemo={() => setDemoModalOpen(true)}
         onOpenLogin={handleOpenLogin}

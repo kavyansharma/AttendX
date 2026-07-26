@@ -1,44 +1,67 @@
 import React from 'react';
-import { ShieldCheck, Lock, Database, Layers, Eye, KeyRound } from 'lucide-react';
+import { ShieldCheck, Lock, FileKey2, Building, Server } from 'lucide-react';
 
 export const SecuritySection: React.FC = () => {
-  const items = [
-    { icon: Database, title: 'Supabase PostgreSQL', desc: 'Enterprise-grade relational database hosting with high availability and automated snapshots.' },
-    { icon: ShieldCheck, title: 'Row Level Security (RLS)', desc: 'Database-level isolation policy rules enforcing tenant and role access boundaries.' },
-    { icon: Lock, title: 'Role-Based Access Control', desc: 'Strict permission guardrails ensuring Students, Teachers, and Admins access only authorized data.' },
-    { icon: Layers, title: 'Multi-Tenant Isolation', desc: 'Data is strictly partitioned by college identifier to protect institutional privacy.' },
-    { icon: Eye, title: 'Immutable Audit Trail', desc: 'Automatic PostgreSQL triggers record all administrative actions for regulatory compliance.' },
-    { icon: KeyRound, title: 'Encrypted Transits & Auth', desc: 'TLS/SSL transport layer security and JWT token-based authentication session management.' },
+  const securityFeatures = [
+    {
+      title: 'Role-Based Access Control (RBAC)',
+      description:
+        'Granular permissions ensure students, teachers, department heads, and super administrators only access authorized features.',
+      icon: Lock,
+    },
+    {
+      title: 'Row-Level Security (RLS)',
+      description:
+        'Powered by Supabase PostgreSQL Row Level Security. Data queries are strictly scoped at the database engine level.',
+      icon: ShieldCheck,
+    },
+    {
+      title: 'Immutable Audit Trails',
+      description:
+        'Every attendance marking event, time log, and manual correction is recorded in cryptographically verifiable audit logs.',
+      icon: FileKey2,
+    },
+    {
+      title: 'Institution-Level Isolation',
+      description:
+        'Multi-tenant architecture ensures complete data separation between different college campuses and departments.',
+      icon: Building,
+    },
   ];
 
   return (
-    <section id="security" className="py-16 sm:py-20 bg-slate-950 relative">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-3xl mx-auto mb-14 space-y-3">
-          <span className="text-xs font-extrabold text-emerald-400 uppercase tracking-widest bg-emerald-500/10 border border-emerald-500/20 px-3.5 py-1 rounded-full">
-            Institutional Governance
-          </span>
-          <h2 className="text-2xl sm:text-4xl font-extrabold text-white">
-            Built for Institutional Security.
+    <section id="security" className="py-16 lg:py-24 bg-[#F8FAFC]">
+      <div className="container-custom space-y-12">
+        {/* Section Header */}
+        <div className="text-center max-w-[700px] mx-auto space-y-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold uppercase tracking-wider">
+            <Server className="w-3.5 h-3.5" />
+            <span>ENTERPRISE SECURITY</span>
+          </div>
+          <h2 className="text-3xl sm:text-4xl lg:text-[44px] font-extrabold text-[#0F172A] tracking-tight leading-tight">
+            Your College Data. Secure and Controlled.
           </h2>
-          <p className="text-slate-400 text-sm sm:text-base leading-relaxed">
-            Protecting student data and institutional records with bank-grade database security policies.
+          <p className="text-base sm:text-lg text-[#64748B] leading-relaxed">
+            Built from the ground up with military-grade database security, strict access controls, and transparent audit logging.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {items.map((sec, idx) => {
+        {/* 4 Security Cards Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {securityFeatures.map((sec, idx) => {
             const Icon = sec.icon;
             return (
               <div
                 key={idx}
-                className="p-6 rounded-2xl bg-slate-900 border border-slate-800/90 hover:border-emerald-500/30 transition-all space-y-3 group text-left"
+                className="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm space-y-4 hover:border-slate-300 transition-all flex items-start gap-5"
               >
-                <div className="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center group-hover:scale-105 transition-transform">
-                  <Icon className="w-5 h-5" />
+                <div className="w-12 h-12 rounded-xl bg-[#0B1F3A] text-[#00B8D9] flex items-center justify-center shrink-0">
+                  <Icon className="w-6 h-6" />
                 </div>
-                <h3 className="text-sm font-bold text-white">{sec.title}</h3>
-                <p className="text-xs text-slate-400 leading-relaxed">{sec.desc}</p>
+                <div className="space-y-2">
+                  <h3 className="text-xl font-bold text-[#0F172A]">{sec.title}</h3>
+                  <p className="text-sm text-[#64748B] leading-relaxed">{sec.description}</p>
+                </div>
               </div>
             );
           })}

@@ -1,53 +1,84 @@
 import React from 'react';
-import { 
-  Zap, Smartphone, UserCheck, GraduationCap, Building, BarChart3, 
-  FileText, Clock, ShieldCheck, Lock, Layers, Database 
-} from 'lucide-react';
+import { Zap, Calendar, BarChart3, MessageSquare, Users, FileText } from 'lucide-react';
 
 export const Features: React.FC = () => {
-  const list = [
-    { icon: Zap, title: 'Live Attendance Marking', desc: 'Faculty marks class attendance in seconds with quick bulk toggles on any device.' },
-    { icon: Smartphone, title: 'Real-Time Student Updates', desc: 'Students receive instant WebSocket updates and recalculated standing percentages.' },
-    { icon: UserCheck, title: 'Teacher Web Portal', desc: 'Dedicated portal for teachers to view today’s class timetable and past session history.' },
-    { icon: GraduationCap, title: 'Student Mobile App', desc: 'Flutter cross-platform app providing low-attendance warnings and correction requests.' },
-    { icon: Building, title: 'College Admin Portal', desc: 'Centralized operational source of truth for academic hierarchy and master records.' },
-    { icon: BarChart3, title: 'Smart Attendance Analytics', desc: 'Real-time department-wise, section-wise, and subject-wise compliance dashboards.' },
-    { icon: FileText, title: 'Attendance Reports & Exports', desc: 'Generate and export official PDF/CSV attendance rosters for university submissions.' },
-    { icon: Clock, title: 'Timetable Management', desc: 'Configure time slots with built-in conflict detection for faculty and sections.' },
-    { icon: ShieldCheck, title: 'Immutable Audit Trail', desc: 'Automatic PostgreSQL triggers record all administrative creation and edit actions.' },
-    { icon: Lock, title: 'Role-Based Access Control', desc: 'Strict permission boundaries separating Student, Teacher, and College Admin roles.' },
-    { icon: Layers, title: 'Multi-Tenant Architecture', desc: 'Complete institutional data isolation supporting multiple colleges and campuses.' },
-    { icon: Database, title: 'Secure Supabase PostgreSQL', desc: 'Powered by enterprise-grade PostgreSQL with Row Level Security (RLS) enforcement.' },
+  const features = [
+    {
+      title: 'Live Attendance',
+      description: 'One-tap attendance session entry with instant WebSocket sync across mobile and web apps.',
+      icon: Zap,
+      color: 'text-[#00B8D9]',
+      bgColor: 'bg-cyan-50',
+    },
+    {
+      title: 'Smart Timetable',
+      description: 'Dynamic timetable integration mapping teachers, sections, and subjects automatically.',
+      icon: Calendar,
+      color: 'text-[#2563EB]',
+      bgColor: 'bg-blue-50',
+    },
+    {
+      title: 'Attendance Analytics',
+      description: 'Comprehensive college-wide analytics, subject averages, and early low-attendance warnings.',
+      icon: BarChart3,
+      color: 'text-[#0B1F3A]',
+      bgColor: 'bg-indigo-50',
+    },
+    {
+      title: 'Correction Requests',
+      description: 'Students can submit documented attendance dispute requests directly to course teachers.',
+      icon: MessageSquare,
+      color: 'text-amber-600',
+      bgColor: 'bg-amber-50',
+    },
+    {
+      title: 'Bulk Student Import',
+      description: 'Seamless CSV & Excel bulk student and teacher onboarding for large college batches.',
+      icon: Users,
+      color: 'text-emerald-600',
+      bgColor: 'bg-emerald-50',
+    },
+    {
+      title: 'Audit Trail',
+      description: 'Immutable record logs tracing who marked, edited, or approved every single attendance update.',
+      icon: FileText,
+      color: 'text-purple-600',
+      bgColor: 'bg-purple-50',
+    },
   ];
 
   return (
-    <section id="features" className="py-16 sm:py-20 bg-slate-950 relative">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-3xl mx-auto mb-14 space-y-3">
-          <span className="text-xs font-extrabold text-indigo-400 uppercase tracking-widest bg-indigo-500/10 border border-indigo-500/20 px-3.5 py-1 rounded-full">
-            Comprehensive Capabilities
-          </span>
-          <h2 className="text-2xl sm:text-4xl font-extrabold text-white">
-            Built for Modern Educational Institutions
+    <section id="features" className="py-16 lg:py-24 bg-[#F8FAFC]">
+      <div className="container-custom space-y-12">
+        {/* Section Header */}
+        <div className="text-center max-w-[700px] mx-auto space-y-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#E6FAFF] text-[#007A93] text-xs font-bold uppercase tracking-wider">
+            <span>PLATFORM CAPABILITIES</span>
+          </div>
+          <h2 className="text-3xl sm:text-4xl lg:text-[44px] font-extrabold text-[#0F172A] tracking-tight leading-tight">
+            Designed for Modern Educational Institutions.
           </h2>
-          <p className="text-slate-400 text-sm sm:text-base leading-relaxed">
-            Everything your college needs to manage live attendance, ensure compliance, and streamline administrative workflows.
+          <p className="text-base sm:text-lg text-[#64748B] leading-relaxed">
+            Every feature is built to streamline administrative workflows and ensure complete transparency.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-          {list.map((item, idx) => {
-            const Icon = item.icon;
+        {/* 6 Features Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {features.map((feature, idx) => {
+            const Icon = feature.icon;
             return (
               <div
                 key={idx}
-                className="p-5 rounded-2xl bg-slate-900 border border-slate-800/90 hover:border-indigo-500/30 transition-all space-y-3 group"
+                className="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md hover:border-slate-300 transition-all space-y-5 flex flex-col justify-between"
               >
-                <div className="w-10 h-10 rounded-xl bg-indigo-600/10 border border-indigo-500/20 text-indigo-400 flex items-center justify-center group-hover:scale-105 transition-transform">
-                  <Icon className="w-5 h-5" />
+                <div className="space-y-4">
+                  <div className={`w-12 h-12 rounded-xl ${feature.bgColor} ${feature.color} flex items-center justify-center`}>
+                    <Icon className="w-6 h-6" />
+                  </div>
+                  <h3 className="text-xl font-bold text-[#0F172A]">{feature.title}</h3>
+                  <p className="text-sm text-[#64748B] leading-relaxed">{feature.description}</p>
                 </div>
-                <h3 className="text-sm font-bold text-white">{item.title}</h3>
-                <p className="text-xs text-slate-400 leading-relaxed">{item.desc}</p>
               </div>
             );
           })}

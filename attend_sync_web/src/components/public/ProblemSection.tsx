@@ -1,68 +1,82 @@
 import React from 'react';
-import { FileSpreadsheet, Clock, AlertTriangle, HelpCircle, EyeOff, Layers } from 'lucide-react';
+import { ClipboardX, Clock, AlertTriangle, EyeOff } from 'lucide-react';
 
 export const ProblemSection: React.FC = () => {
   const problems = [
     {
-      icon: FileSpreadsheet,
-      title: 'Manual Attendance Tracking',
-      description: 'Faculty spends 10–15 minutes of every lecture manually calling out names or passing roll sheets.',
+      title: 'Manual Attendance Registers',
+      description:
+        'Paper registers take 10+ minutes out of every class session, get damaged easily, and require tedious manual entry.',
+      icon: ClipboardX,
+      color: 'text-amber-600',
+      bgColor: 'bg-amber-50',
+      borderColor: 'border-amber-200',
     },
     {
-      icon: Clock,
-      title: 'Paper Records & Lost Registers',
-      description: 'Physical registers get misplaced, damaged, or take weeks to be manually typed into college ERPs.',
-    },
-    {
-      icon: AlertTriangle,
       title: 'Delayed Student Updates',
-      description: 'Students only discover they are below 75% attendance threshold weeks later when exam hall tickets are blocked.',
+      description:
+        'Students discover low attendance percentages at the very end of the semester when it is already too late to rectify.',
+      icon: Clock,
+      color: 'text-rose-600',
+      bgColor: 'bg-rose-50',
+      borderColor: 'border-rose-200',
     },
     {
-      icon: HelpCircle,
-      title: 'Attendance Disputes',
-      description: 'Lack of timestamped audit logs leads to frequent student-faculty disputes over proxy or missed marks.',
+      title: 'Attendance Calculation Errors',
+      description:
+        'Manual tallying across hundreds of student spreadsheets leads to disputes, missing records, and incorrect eligibility status.',
+      icon: AlertTriangle,
+      color: 'text-orange-600',
+      bgColor: 'bg-orange-50',
+      borderColor: 'border-orange-200',
     },
     {
+      title: 'No Centralized Visibility',
+      description:
+        'College management and department heads lack real-time oversight of class attendance trends and low-attendance alerts.',
       icon: EyeOff,
-      title: 'No Real-Time Visibility',
-      description: 'HODs and Principals lack live dashboards to monitor daily campus attendance percentages across departments.',
-    },
-    {
-      icon: Layers,
-      title: 'Scattered Legacy Systems',
-      description: 'Biometric scanners, Excel files, and legacy ERPs operate in silos without real-time synchronization.',
+      color: 'text-slate-600',
+      bgColor: 'bg-slate-100',
+      borderColor: 'border-slate-200',
     },
   ];
 
   return (
-    <section className="py-16 sm:py-20 bg-slate-900/60 border-y border-slate-800/80 relative">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-3xl mx-auto mb-14 space-y-3">
-          <span className="text-xs font-extrabold text-rose-400 uppercase tracking-widest bg-rose-500/10 border border-rose-500/20 px-3.5 py-1 rounded-full">
-            The Status Quo Challenge
-          </span>
-          <h2 className="text-2xl sm:text-4xl font-extrabold text-white">
-            Attendance Management Shouldn't Be This Difficult.
+    <section id="problem" className="py-16 lg:py-24 bg-[#F8FAFC]">
+      <div className="container-custom space-y-12">
+        {/* Section Header */}
+        <div className="text-center max-w-[700px] mx-auto space-y-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-100 text-amber-800 text-xs font-bold uppercase tracking-wider">
+            <span>THE CHALLENGE</span>
+          </div>
+          <h2 className="text-3xl sm:text-4xl lg:text-[44px] font-extrabold text-[#0F172A] tracking-tight leading-tight">
+            Traditional Attendance Is Still Too Manual.
           </h2>
-          <p className="text-slate-400 text-sm sm:text-base leading-relaxed">
-            Legacy paper registers and delayed ERP entries create administrative bottlenecks for colleges.
+          <p className="text-base sm:text-lg text-[#64748B] leading-relaxed">
+            Legacy paper registers and fragmented spreadsheets slow down teachers, confuse students, and leave administrators in the dark.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {problems.map((prob, idx) => {
-            const Icon = prob.icon;
+        {/* Problem Cards Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {problems.map((problem, idx) => {
+            const Icon = problem.icon;
             return (
               <div
                 key={idx}
-                className="p-6 rounded-2xl bg-slate-950 border border-slate-800/90 hover:border-rose-500/30 transition-all flex flex-col space-y-3 group"
+                className={`bg-white p-6 rounded-2xl border ${problem.borderColor} shadow-sm space-y-4 hover:shadow-md transition-all flex flex-col justify-between`}
               >
-                <div className="w-10 h-10 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-400 flex items-center justify-center group-hover:scale-105 transition-transform">
-                  <Icon className="w-5 h-5" />
+                <div className="space-y-4">
+                  <div className={`w-12 h-12 rounded-xl ${problem.bgColor} ${problem.color} flex items-center justify-center`}>
+                    <Icon className="w-6 h-6" />
+                  </div>
+                  <h3 className="text-lg font-bold text-[#0F172A] leading-snug">
+                    {problem.title}
+                  </h3>
+                  <p className="text-sm text-[#64748B] leading-relaxed">
+                    {problem.description}
+                  </p>
                 </div>
-                <h3 className="text-base font-bold text-white">{prob.title}</h3>
-                <p className="text-xs text-slate-400 leading-relaxed">{prob.description}</p>
               </div>
             );
           })}
