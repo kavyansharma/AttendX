@@ -15,9 +15,13 @@ import {
 
 interface TeacherDashboardPageProps {
   teacher: TeacherProfileData | null;
+  onStartAttendanceSession: (cls: TodayClass) => void;
 }
 
-export const TeacherDashboardPage: React.FC<TeacherDashboardPageProps> = ({ teacher }) => {
+export const TeacherDashboardPage: React.FC<TeacherDashboardPageProps> = ({
+  teacher,
+  onStartAttendanceSession,
+}) => {
   const [stats, setStats] = useState<TeacherDashboardStats>({
     todayClassesCount: 4,
     completedCount: 2,
@@ -123,7 +127,7 @@ export const TeacherDashboardPage: React.FC<TeacherDashboardPageProps> = ({ teac
 
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#E6FAFF] text-[#007A93] text-xs font-bold border border-[#00B8D9]/30">
               <Sparkles className="w-3.5 h-3.5 text-[#00B8D9]" />
-              <span>Phase 3A Active</span>
+              <span>Phase 3B Engine Active</span>
             </div>
           </div>
 
@@ -136,7 +140,11 @@ export const TeacherDashboardPage: React.FC<TeacherDashboardPageProps> = ({ teac
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
               {todayClasses.map((cls) => (
-                <TodayClassCard key={cls.id} cls={cls} />
+                <TodayClassCard
+                  key={cls.id}
+                  cls={cls}
+                  onStartSession={(item) => onStartAttendanceSession(item)}
+                />
               ))}
             </div>
           )}
@@ -159,7 +167,7 @@ export const TeacherDashboardPage: React.FC<TeacherDashboardPageProps> = ({ teac
             </div>
 
             {upcomingClasses.length === 0 ? (
-              <div className="text-xs text-slate-400 italic py-2">
+              <div className="text-xs text-[#64748B] italic py-2">
                 No more upcoming classes scheduled today.
               </div>
             ) : (

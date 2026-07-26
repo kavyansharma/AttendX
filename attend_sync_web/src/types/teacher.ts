@@ -1,5 +1,9 @@
 export type ClassStatus = 'UPCOMING' | 'IN_PROGRESS' | 'COMPLETED';
 
+export type AttendanceRecordStatus = 'PRESENT' | 'ABSENT' | 'LATE' | 'EXCUSED' | 'NOT_MARKED';
+
+export type SessionStatus = 'DRAFT' | 'IN_PROGRESS' | 'SUBMITTED' | 'CANCELLED';
+
 export interface AssignedSubject {
   id: string;
   code: string;
@@ -40,6 +44,7 @@ export interface TeacherProfileData {
 export interface TodayClass {
   id: string;
   timetableId?: string;
+  subjectId?: string;
   subjectCode: string;
   subjectName: string;
   sectionId: string;
@@ -79,4 +84,50 @@ export interface TeacherActivity {
   type: 'SUBMITTED' | 'COMPLETED' | 'NOTICE';
   subjectName?: string;
   sectionName?: string;
+}
+
+// PHASE 3B ATTENDANCE ENGINE TYPES
+export interface StudentRosterItem {
+  studentId: string;
+  rollNumber: string;
+  registrationNumber: string;
+  fullName: string;
+  avatarUrl?: string;
+  status: AttendanceRecordStatus;
+  recordId?: string;
+  remarks?: string;
+}
+
+export interface AttendanceSessionDetails {
+  id: string;
+  collegeId: string;
+  teacherId: string;
+  teacherName: string;
+  timetableId?: string;
+  subjectId: string;
+  subjectCode: string;
+  subjectName: string;
+  sectionId: string;
+  sectionName: string;
+  courseName: string;
+  semesterName: string;
+  roomNumber: string;
+  sessionDate: string;
+  startTime: string;
+  endTime: string;
+  status: SessionStatus;
+  isSubmitted: boolean;
+  submittedAt?: string;
+  roster: StudentRosterItem[];
+}
+
+export interface AttendanceSummaryData {
+  totalStudents: number;
+  markedCount: number;
+  notMarkedCount: number;
+  presentCount: number;
+  absentCount: number;
+  lateCount: number;
+  excusedCount: number;
+  attendanceRate: number; // percentage (0-100)
 }

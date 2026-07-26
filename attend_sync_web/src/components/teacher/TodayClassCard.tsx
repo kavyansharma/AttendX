@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { Clock, MapPin, Play, CheckCircle2, Info, Users, Sparkles, X } from 'lucide-react';
+import { Clock, MapPin, Play, CheckCircle2, Info, Users, X } from 'lucide-react';
 import { TodayClass } from '../../types/teacher';
 
 interface TodayClassCardProps {
   cls: TodayClass;
-  onStartSession?: (classId: string) => void;
-  onViewDetails?: (classId: string) => void;
+  onStartSession?: (cls: TodayClass) => void;
+  onViewDetails?: (cls: TodayClass) => void;
 }
 
 export const TodayClassCard: React.FC<TodayClassCardProps> = ({
@@ -13,21 +13,20 @@ export const TodayClassCard: React.FC<TodayClassCardProps> = ({
   onStartSession,
   onViewDetails,
 }) => {
-  const [phase3bModalOpen, setPhase3bModalOpen] = useState(false);
   const [detailsModalOpen, setDetailsModalOpen] = useState(false);
 
   const handleStartAttendanceClick = () => {
     if (onStartSession) {
-      onStartSession(cls.id);
+      onStartSession(cls);
     }
-    setPhase3bModalOpen(true);
   };
 
   const handleViewDetailsClick = () => {
     if (onViewDetails) {
-      onViewDetails(cls.id);
+      onViewDetails(cls);
+    } else {
+      setDetailsModalOpen(true);
     }
-    setDetailsModalOpen(true);
   };
 
   return (
@@ -103,6 +102,14 @@ export const TodayClassCard: React.FC<TodayClassCardProps> = ({
               <Info className="w-4 h-4 text-slate-500" />
               <span>View Details</span>
             </button>
+          ) : cls.status === 'IN_PROGRESS' ? (
+            <button
+              onClick={handleStartAttendanceClick}
+              className="w-full btn btn-primary py-2.5 px-4 text-xs font-bold bg-[#00B8D9] hover:bg-[#009BB5] text-[#0B1F3A] shadow-sm flex items-center justify-center gap-2"
+            >
+              <Play className="w-4 h-4 text-[#0B1F3A] fill-current" />
+              <span>Continue Attendance</span>
+            </button>
           ) : (
             <button
               onClick={handleStartAttendanceClick}
@@ -114,46 +121,6 @@ export const TodayClassCard: React.FC<TodayClassCardProps> = ({
           )}
         </div>
       </div>
-
-      {/* PHASE 3B COMING SOON NOTICE MODAL */}
-      {phase3bModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/60 backdrop-blur-xs animate-in fade-in duration-200">
-          <div className="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl space-y-5 border border-slate-200 relative">
-            <button
-              onClick={() => setPhase3bModalOpen(false)}
-              className="absolute top-4 right-4 p-1.5 rounded-lg text-slate-400 hover:text-slate-700 bg-slate-100"
-            >
-              <X className="w-5 h-5" />
-            </button>
-
-            <div className="w-12 h-12 rounded-2xl bg-[#E6FAFF] text-[#007A93] flex items-center justify-center">
-              <Sparkles className="w-6 h-6 text-[#00B8D9]" />
-            </div>
-
-            <div className="space-y-2">
-              <h3 className="text-xl font-extrabold text-[#0F172A]">
-                Attendance Session Coming in Phase 3B
-              </h3>
-              <p className="text-sm text-[#64748B] leading-relaxed">
-                The secure Teacher Portal foundation is now active. Live attendance sessions and real-time student roster marking will be enabled in <strong className="text-[#0B1F3A]">Phase 3B</strong>.
-              </p>
-            </div>
-
-            <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 text-xs space-y-1 font-mono text-slate-600">
-              <div><strong>Class:</strong> {cls.subjectName}</div>
-              <div><strong>Section:</strong> {cls.sectionName} ({cls.roomNumber})</div>
-              <div><strong>Time Slot:</strong> {cls.startTime} - {cls.endTime}</div>
-            </div>
-
-            <button
-              onClick={() => setPhase3bModalOpen(false)}
-              className="w-full btn btn-primary py-3 text-sm font-bold bg-[#0B1F3A] text-white"
-            >
-              Understood
-            </button>
-          </div>
-        </div>
-      )}
 
       {/* COMPLETED CLASS DETAILS MODAL */}
       {detailsModalOpen && (

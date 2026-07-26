@@ -32,8 +32,10 @@ import { TeacherLoginPage } from './pages/teacher/TeacherLoginPage';
 import { TeacherDashboardPage } from './pages/teacher/TeacherDashboardPage';
 import { TeacherClassesPage } from './pages/teacher/TeacherClassesPage';
 import { TeacherProfilePage } from './pages/teacher/TeacherProfilePage';
+import { TeacherAttendanceSessionPage } from './pages/teacher/TeacherAttendanceSessionPage';
 import { TeacherService } from './services/teacherService';
-import { TeacherProfileData } from './types/teacher';
+import { AttendanceService } from './services/attendanceService';
+import { TeacherProfileData, TodayClass } from './types/teacher';
 
 export const App: React.FC = () => {
   const [demoModalOpen, setDemoModalOpen] = useState(false);
@@ -129,6 +131,14 @@ export const App: React.FC = () => {
     window.history.pushState({}, '', '/');
   };
 
+  // Start or resume attendance session callback
+  const handleStartAttendanceSession = async (cls: TodayClass) => {
+    const session = TeacherService.getActiveSession() || teacherSession;
+    if (!session) return;
+    const sessionDetails = await AttendanceService.startOrResumeSession(cls, session);
+    navigateTeacher(`/teacher/attendance/${sessionDetails.id}`);
+  };
+
   // IF IN TEACHER PORTAL ROUTE SPACE
   if (currentTeacherPath.startsWith('/teacher')) {
     // If not authenticated and trying to access protected teacher routes, redirect to login
@@ -150,20 +160,52 @@ export const App: React.FC = () => {
       );
     }
 
-    let teacherContent = <TeacherDashboardPage teacher={teacherSession} />;
-    switch (currentTeacherPath) {
-      case '/teacher':
-      case '/teacher/dashboard':
-        teacherContent = <TeacherDashboardPage teacher={teacherSession} />;
-        break;
-      case '/teacher/classes':
-        teacherContent = <TeacherClassesPage teacher={teacherSession} />;
-        break;
-      case '/teacher/profile':
-        teacherContent = <TeacherProfilePage teacher={teacherSession} />;
-        break;
-      default:
-        teacherContent = <TeacherDashboardPage teacher={teacherSession} />;
+    let teacherContent = (
+      <TeacherDashboardPage
+        teacher={teacherSession}
+        onStartAttendanceSession={handleStartAttendanceSession}
+      />
+    );
+
+    if (currentTeacherPath.startsWith('/teacher/attendance/')) {
+      const sessionId = currentTeacherPath.replace('/teacher/attendance/', '');
+      teacherContent = (
+        <TeacherAttendanceSessionPage
+          sessionId={sessionId}
+          teacher={teacherSession}
+          onNavigateBack={() => navigateTeacher('/teacher/dashboard')}
+        />
+      );
+    } else {
+      switch (currentTeacherPath) {
+        case '/teacher':
+        case '/teacher/dashboard':
+          teacherContent = (
+            <TeacherDashboardPage
+              teacher={teacherSession}
+              onStartAttendanceSession={handleStartAttendanceSession}
+            />
+          );
+          break;
+        case '/teacher/classes':
+          teacherContent = (
+            <TeacherClassesPage
+              teacher={teacherSession}
+              onStartAttendanceSession={handleStartAttendanceSession}
+            />
+          );
+          break;
+        case '/teacher/profile':
+          teacherContent = <TeacherProfilePage teacher={teacherSession} />;
+          break;
+        default:
+          teacherContent = (
+            <TeacherDashboardPage
+              teacher={teacherSession}
+              onStartAttendanceSession={handleStartAttendanceSession}
+            />
+          );
+      }
     }
 
     return (

@@ -1,14 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { BookOpen, Users, MapPin, Clock, Calendar } from 'lucide-react';
+import { BookOpen, Calendar } from 'lucide-react';
 import { TeacherService } from '../../services/teacherService';
 import { TeacherProfileData, TodayClass } from '../../types/teacher';
 import { TodayClassCard } from '../../components/teacher/TodayClassCard';
 
 interface TeacherClassesPageProps {
   teacher: TeacherProfileData | null;
+  onStartAttendanceSession: (cls: TodayClass) => void;
 }
 
-export const TeacherClassesPage: React.FC<TeacherClassesPageProps> = ({ teacher }) => {
+export const TeacherClassesPage: React.FC<TeacherClassesPageProps> = ({
+  teacher,
+  onStartAttendanceSession,
+}) => {
   const [classes, setClasses] = useState<TodayClass[]>([]);
   const [activeFilter, setActiveFilter] = useState<'ALL' | 'UPCOMING' | 'COMPLETED'>('ALL');
   const [isLoading, setIsLoading] = useState(true);
@@ -96,7 +100,11 @@ export const TeacherClassesPage: React.FC<TeacherClassesPageProps> = ({ teacher 
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredClasses.map((cls) => (
-            <TodayClassCard key={cls.id} cls={cls} />
+            <TodayClassCard
+              key={cls.id}
+              cls={cls}
+              onStartSession={(item) => onStartAttendanceSession(item)}
+            />
           ))}
         </div>
       )}
